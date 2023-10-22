@@ -1,0 +1,18 @@
+{
+    "tt": "type",
+    "sp": "span",
+    "mt": "matches",
+    "in": "innings",
+    "pr": null,
+    "rn": "runs",
+    "fo": "fours",
+    "si": "sixes",
+    "ft": "fifties",
+    "hn": "hundereds",
+    "bf": "balls_faced",
+    "dk": "ducks",
+    "no": "not_outs",
+    "hs": "high_score",
+    "bta": "batting_average",
+    "btsr": "batting_strike_rate"
+}

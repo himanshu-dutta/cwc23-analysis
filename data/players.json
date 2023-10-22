@@ -1,93 +1,107 @@
 {
     "Rohit Sharma": {
+        "player_id": 34102,
         "profile": "https://www.espncricinfo.com/cricketers/rohit-sharma-34102",
         "statistics": "https://www.espncricinfo.com/cricketers/rohit-sharma-34102/bowling-batting-stats",
         "odi_matches": "https://stats.espncricinfo.com/ci/engine/player/34102.html?class=2;template=results;type=allround;view=match",
         "role": "top-order-batter"
     },
     "Hardik Pandya": {
+        "player_id": 625371,
         "profile": "https://www.espncricinfo.com/cricketers/hardik-pandya-625371",
         "statistics": "https://www.espncricinfo.com/cricketers/hardik-pandya-625371/bowling-batting-stats",
         "odi_matches": "https://stats.espncricinfo.com/ci/engine/player/625371.html?class=2;template=results;type=allround;view=match",
         "role": "allrounder"
     },
     "Shubman Gill": {
+        "player_id": 1070173,
         "profile": "https://www.espncricinfo.com/cricketers/shubman-gill-1070173",
         "statistics": "https://www.espncricinfo.com/cricketers/shubman-gill-1070173/bowling-batting-stats",
         "odi_matches": "https://stats.espncricinfo.com/ci/engine/player/1070173.html?class=2;template=results;type=allround;view=match",
         "role": "opening-batter"
     },
     "Virat Kohli": {
+        "player_id": 253802,
         "profile": "https://www.espncricinfo.com/cricketers/virat-kohli-253802",
         "statistics": "https://www.espncricinfo.com/cricketers/virat-kohli-253802/bowling-batting-stats",
         "odi_matches": "https://stats.espncricinfo.com/ci/engine/player/253802.html?class=2;template=results;type=allround;view=match",
         "role": "top-order-batter"
     },
     "Shreyas Iyer": {
+        "player_id": 642519,
         "profile": "https://www.espncricinfo.com/cricketers/shreyas-iyer-642519",
         "statistics": "https://www.espncricinfo.com/cricketers/shreyas-iyer-642519/bowling-batting-stats",
         "odi_matches": "https://stats.espncricinfo.com/ci/engine/player/642519.html?class=2;template=results;type=allround;view=match",
         "role": "top-order-batter"
     },
     "Ishan Kishan": {
+        "player_id": 720471,
         "profile": "https://www.espncricinfo.com/cricketers/ishan-kishan-720471",
         "statistics": "https://www.espncricinfo.com/cricketers/ishan-kishan-720471/bowling-batting-stats",
         "odi_matches": "https://stats.espncricinfo.com/ci/engine/player/720471.html?class=2;template=results;type=allround;view=match",
         "role": "wicketkeeper-batter"
     },
     "KL Rahul": {
+        "player_id": 422108,
         "profile": "https://www.espncricinfo.com/cricketers/kl-rahul-422108",
         "statistics": "https://www.espncricinfo.com/cricketers/kl-rahul-422108/bowling-batting-stats",
         "odi_matches": "https://stats.espncricinfo.com/ci/engine/player/422108.html?class=2;template=results;type=allround;view=match",
         "role": "wicketkeeper-batter"
     },
     "Suryakumar Yadav": {
+        "player_id": 446507,
         "profile": "https://www.espncricinfo.com/cricketers/suryakumar-yadav-446507",
         "statistics": "https://www.espncricinfo.com/cricketers/suryakumar-yadav-446507/bowling-batting-stats",
         "odi_matches": "https://stats.espncricinfo.com/ci/engine/player/446507.html?class=2;template=results;type=allround;view=match",
         "role": "batter"
     },
     "Ravindra Jadeja": {
+        "player_id": 234675,
         "profile": "https://www.espncricinfo.com/cricketers/ravindra-jadeja-234675",
         "statistics": "https://www.espncricinfo.com/cricketers/ravindra-jadeja-234675/bowling-batting-stats",
         "odi_matches": "https://stats.espncricinfo.com/ci/engine/player/234675.html?class=2;template=results;type=allround;view=match",
         "role": "allrounder"
     },
     "Axar Patel": {
+        "player_id": 554691,
         "profile": "https://www.espncricinfo.com/cricketers/axar-patel-554691",
         "statistics": "https://www.espncricinfo.com/cricketers/axar-patel-554691/bowling-batting-stats",
         "odi_matches": "https://stats.espncricinfo.com/ci/engine/player/554691.html?class=2;template=results;type=allround;view=match",
         "role": "bowling"
     },
     "Shardul Thakur": {
+        "player_id": 475281,
         "profile": "https://www.espncricinfo.com/cricketers/shardul-thakur-475281",
         "statistics": "https://www.espncricinfo.com/cricketers/shardul-thakur-475281/bowling-batting-stats",
         "odi_matches": "https://stats.espncricinfo.com/ci/engine/player/475281.html?class=2;template=results;type=allround;view=match",
         "role": "bowler"
     },
     "Jasprit Bumrah": {
+        "player_id": 625383,
         "profile": "https://www.espncricinfo.com/cricketers/jasprit-bumrah-625383",
         "statistics": "https://www.espncricinfo.com/cricketers/jasprit-bumrah-625383/bowling-batting-stats",
         "odi_matches": "https://stats.espncricinfo.com/ci/engine/player/625383.html?class=2;template=results;type=allround;view=match",
         "role": "bowler"
     },
     "Mohammed Shami": {
+        "player_id": 481896,
         "profile": "https://www.espncricinfo.com/cricketers/mohammed-shami-481896",
         "statistics": "https://www.espncricinfo.com/cricketers/mohammed-shami-481896/bowling-batting-stats",
         "odi_matches": "https://stats.espncricinfo.com/ci/engine/player/481896.html?class=2;template=results;type=allround;view=match",
         "role": "bowler"
     },
     "Mohammed Siraj": {
+        "player_id": 940973,
         "profile": "https://www.espncricinfo.com/cricketers/mohammed-siraj-940973",
         "statistics": "https://www.espncricinfo.com/cricketers/mohammed-siraj-940973/bowling-batting-stats",
         "odi_matches": "https://stats.espncricinfo.com/ci/engine/player/940973.html?class=2;template=results;type=allround;view=match",
         "role": "bowler"
     },
     "Kuldeep Yadav": {
+        "player_id": 559235,
         "profile": "https://www.espncricinfo.com/cricketers/kuldeep-yadav-559235",
         "statistics": "https://www.espncricinfo.com/cricketers/kuldeep-yadav-559235/bowling-batting-stats",
         "odi_matches": "https://stats.espncricinfo.com/ci/engine/player/559235.html?class=2;template=results;type=allround;view=match",
         "role": "bowler"
-    },
-    
+    }
 }
