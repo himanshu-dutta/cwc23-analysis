@@ -1,4 +1,3 @@
-
 from bs4 import BeautifulSoup
 import json
 import requests
@@ -18,7 +17,9 @@ def get_odi_urls(player_id):
     urls = dict()
     for stat_type in STAT_TYPES:
         url = STATS_URL.format(
-            player_id=player_id, record_class=RECORD_CLASS_ID["ODI"], stat_type=stat_type
+            player_id=player_id,
+            record_class=RECORD_CLASS_ID["ODI"],
+            stat_type=stat_type,
         )
         urls[stat_type] = url
     return urls
@@ -38,7 +39,7 @@ def get_odi_match_records(url: str):
         return {}
 
     matches = []
-    soup = BeautifulSoup(r.text)
+    soup = BeautifulSoup(r.text, "html.parser")
     tb = soup.find("caption", string="Match by match list").parent
     tbody = tb.findChild("tbody")
     trows = tbody.findChildren("tr")
@@ -54,13 +55,23 @@ def get_odi_match_records(url: str):
         opposition = tds[6].text
         ground = tds[7].text
         date = tds[8].text
-        
+        match_link = tds[9].findChild("a")
+        match_id = match_link["href"].split("/")[-1].split(".")[0]
+
         match = {
-            "runs": runs, "not_out": no, "wickets": wickets, "runs_conceded": runs_conceded, "catches_taken": catches_taken, "stumpings_made": stumpings_made, "opposition": opposition, "ground": ground, "date": date,
+            "runs": runs,
+            "not_out": no,
+            "wickets": wickets,
+            "runs_conceded": runs_conceded,
+            "catches_taken": catches_taken,
+            "stumpings_made": stumpings_made,
+            "opposition": opposition,
+            "ground": ground,
+            "date": date,
+            "match_id": match_id,
         }
         matches.append(match)
     return matches
-
 
 
 def load_player_urls(path: str):
@@ -93,6 +104,7 @@ if __name__ == "__main__":
             stat = get_summary_statistics(url)
             stats[stat_type] = stat
 
-        with open(save_dir + f"/{get_filename_from_player_name(player_name)}.json", "w") as fp:
+        with open(
+            save_dir + f"/{get_filename_from_player_name(player_name)}.json", "w"
+        ) as fp:
             json.dump(stats, fp, indent=4)
-        
