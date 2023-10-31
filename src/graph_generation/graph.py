@@ -1,6 +1,8 @@
 import json
 import os
 import plotly.express as px
+import plotly.subplots as sp
+import plotly.graph_objects as go
 import pandas as pd
 from collections import defaultdict
 
@@ -23,7 +25,64 @@ terminology_mapping = {
     "btsr": "batting_strike_rate"
 }
 
-def calculate_not_out_percentages_and_save(player_data, output_directory, player_name):
+import os
+import json
+import pandas as pd
+import plotly.express as px
+
+def generate_batting_strike_rate_vs_batting_position_graph(data, output_directory, player_name):
+    batting_positions = []
+    batting_strike_rates = []
+
+    for stats_group in data["BATTING"]["summary"]["groups"]:
+        if stats_group["type"] == "BATTING_POSITION":
+            for stat in stats_group["stats"]:
+                position = stat["tt"] 
+                batting_positions.append(position)
+                batting_strike_rates.append(float(stat["btsr"]))
+
+    custom_order = ["1st position", "2nd position", "3rd position", "4th position", "5th position", "6th position", "7th position", "8th position", "9th position", "10th position", "11th position"]
+
+    player_title = player_name.replace('_', ' ').title()
+    df = pd.DataFrame({
+        "Batting Position": batting_positions,
+        "Batting Strike Rate": batting_strike_rates
+    })
+
+    df["Batting Position"] = pd.Categorical(df["Batting Position"], categories=custom_order, ordered=True)
+    df = df.sort_values("Batting Position")
+
+    fig = px.bar(df, x="Batting Position", y="Batting Strike Rate", title=f"{player_title}'s Batting Strike Rate at Batting Position")
+    image_file_path = os.path.join(output_directory, f"{player_name}_strike_rate.png")
+    fig.write_image(image_file_path)
+
+def generate_runs_scored_vs_batting_position_graph(data, output_directory, player_name):
+    batting_positions = []
+    runs_scored = []
+
+    for stats_group in data["BATTING"]["summary"]["groups"]:
+        if stats_group["type"] == "BATTING_POSITION":
+            for stat in stats_group["stats"]:
+                position = stat["tt"]  
+                batting_positions.append(position)
+                runs_scored.append(int(stat["rn"])) 
+
+    custom_order = ["1st position", "2nd position", "3rd position", "4th position", "5th position", "6th position", "7th position", "8th position", "9th position", "10th position", "11th position"]
+
+    player_title = player_name.replace('_', ' ').title()
+    df = pd.DataFrame({
+        "Batting Position": batting_positions,
+        "Runs Scored": runs_scored
+    })
+
+    df["Batting Position"] = pd.Categorical(df["Batting Position"], categories=custom_order, ordered=True)
+    df = df.sort_values("Batting Position")
+
+    fig = px.bar(df, x="Batting Position", y="Runs Scored", title=f"{player_title}'s Runs Scored at Batting Position")
+    image_file_path = os.path.join(output_directory, f"{player_name}_runs_scored.png")
+    fig.write_image(image_file_path)
+
+def generate_not_out_percentages_graph(player_data, output_directory, player_name):
     odi_matches = player_data.get("odi_matches", [])
     not_out_counts = defaultdict(int)
     match_counts = defaultdict(int)
@@ -164,12 +223,16 @@ output_directory_averages = os.path.abspath("./Overall_Player_Stats/Batting_Stat
 output_directory_runs = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Runs_Scored")
 output_directory_fifties_vs_hundreds = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Fifties_vs_Hundreds")
 output_directory_not_out_percentages = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Not_Out_Percentages")
+output_directory_generate_runs_scored_vs_batting_position = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Runs_Scored_vs_Batting_Position")
+output_directory_generate_batting_strike_rate_vs_batting_position = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Batting_Strike_Rate_vs_Batting_Position")
 
 os.makedirs(output_directory_strike_rates, exist_ok=True)
 os.makedirs(output_directory_averages, exist_ok=True)
 os.makedirs(output_directory_runs, exist_ok=True)
 os.makedirs(output_directory_fifties_vs_hundreds, exist_ok=True)
 os.makedirs(output_directory_not_out_percentages, exist_ok=True)
+os.makedirs(output_directory_generate_runs_scored_vs_batting_position, exist_ok=True)
+os.makedirs(output_directory_generate_batting_strike_rate_vs_batting_position, exist_ok=True)
 
 json_file_path = os.path.abspath("../../data/players.json")
 
@@ -185,10 +248,12 @@ for player_name in players:
     with open(json_file_path, "r") as json_file:
         data = json.load(json_file)
 
-    calculate_not_out_percentages_and_save(data, output_directory_not_out_percentages, player_name)
+    generate_not_out_percentages_graph(data, output_directory_not_out_percentages, player_name)
     generate_batting_strike_rate_graph(data, output_directory_strike_rates, player_name)
     generate_batting_average_graph(data, output_directory_averages, player_name)
     generate_runs_scored_graph(data, output_directory_runs, player_name)
     generate_fifties_vs_hundreds_graph(data, output_directory_fifties_vs_hundreds, player_name)
+    generate_runs_scored_vs_batting_position_graph(data, output_directory_generate_runs_scored_vs_batting_position, player_name)
+    generate_batting_strike_rate_vs_batting_position_graph(data, output_directory_generate_batting_strike_rate_vs_batting_position, player_name)
 
 print("Graphs saved in their respective folders.")
