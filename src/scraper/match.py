@@ -53,6 +53,7 @@ if __name__ == "__main__":
             match_details = get_odi_match_details(MATCH_URL.format(match_id=match_id))
             odi_match_details.append(match_details)
         print("")
+        odi_match_details.reverse()
         stats = dict()
         stats["player_id"] = player_id
         stats["player"] = player_name
