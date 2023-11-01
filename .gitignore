@@ -161,4 +161,4 @@ cython_debug/
 .vscode/
 data/players
 data/odi_matches
-.DS_Store
+**/.DS_Store
