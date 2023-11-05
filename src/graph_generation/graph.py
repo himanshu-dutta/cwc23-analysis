@@ -23,7 +23,8 @@ terminology_mapping = {
     "hs": "high_score",
     "bta": "batting_average",
     "btsr": "batting_strike_rate",
-    "wk": "wickets_taken"
+    "wk": "wickets_taken",
+    "bwe": "average_economy"
 }
 
 def generate_batting_strike_rate_vs_batting_position_graph(data, output_directory, player_name):
@@ -225,7 +226,7 @@ def generate_wickets_taken_graph(data, output_directory, player_name):
                 year = int(stat["tt"].split()[-1])
                 year_data = {terminology_mapping[key]: value for key, value in stat.items() if key in terminology_mapping}
                 year_data["Year"] = year
-                if year >= 2017 and year_data["wickets_taken"] is not None:
+                if year_data["wickets_taken"] is not None:
                     years.append(year)
                     wickets_taken.append(int(year_data["wickets_taken"]))
 
@@ -238,10 +239,11 @@ def generate_wickets_taken_graph(data, output_directory, player_name):
     fig_wickets = px.line(df_wickets, x="Year", y="Wickets Taken", labels={"x": "Year", "y": "Wickets Taken"})
     fig_wickets.update_layout(title=f"{player_title}'s Wickets Taken Over the Years (2017 and Beyond)")
     fig_wickets.update_xaxes(title_text=None)
+    fig_wickets.update_xaxes(tickvals=years)  
     fig_wickets.add_annotation(
         text="Year",
-        x=0.5,  
-        y=-0.1,  
+        x=0.5,
+        y=-0.1,
         xref="paper",
         yref="paper",
         showarrow=False
@@ -249,6 +251,40 @@ def generate_wickets_taken_graph(data, output_directory, player_name):
     image_file_path_wickets = os.path.join(output_directory, f"{player_name}_wickets.png")
     fig_wickets.write_image(image_file_path_wickets)
 
+def generate_average_economy_graph(data, output_directory, player_name):
+    years = []
+    average_economy = []
+
+    for stats_group in data["BOWLING"]["summary"]["groups"]:
+        if stats_group["type"] == "YEAR":
+            for stat in stats_group["stats"]:
+                year = int(stat["tt"].split()[-1])
+                year_data = {terminology_mapping[key]: value for key, value in stat.items() if key in terminology_mapping}
+                year_data["Year"] = year
+                if year_data["average_economy"] is not None:
+                    years.append(year)
+                    average_economy.append(float(year_data["average_economy"]))
+
+    player_title = player_name.replace('_', ' ').title()
+    df_average_economy = pd.DataFrame({
+        "Year": years,
+        "Average Economy": average_economy
+    })
+
+    fig_average_economy = px.line(df_average_economy, x="Year", y="Average Economy", labels={"x": "Year", "y": "Average Economy"})
+    fig_average_economy.update_layout(title=f"{player_title}'s Average Economy Over the Years (2017 and Beyond)")
+    fig_average_economy.update_xaxes(title_text=None)
+    fig_average_economy.update_xaxes(tickvals=years) 
+    fig_average_economy.add_annotation(
+        text="Year",
+        x=0.5,
+        y=-0.1,
+        xref="paper",
+        yref="paper",
+        showarrow=False
+    )
+    image_file_path_average_economy = os.path.join(output_directory, f"{player_name}_average_economy.png")
+    fig_average_economy.write_image(image_file_path_average_economy)
 
 
 
@@ -260,6 +296,7 @@ output_directory_not_out_percentages = os.path.abspath("./Overall_Player_Stats/B
 output_directory_generate_runs_scored_vs_batting_position = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Runs_Scored_vs_Batting_Position")
 output_directory_generate_batting_strike_rate_vs_batting_position = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Batting_Strike_Rate_vs_Batting_Position")
 output_directory_wickets_taken = os.path.abspath("./Overall_Player_Stats/Bowling_Stats/Wickets_Taken")
+output_directory_average_economy = os.path.abspath("./Overall_Player_Stats/Bowling_Stats/Average_Economy")
 
 os.makedirs(output_directory_strike_rates, exist_ok=True)
 os.makedirs(output_directory_averages, exist_ok=True)
@@ -269,6 +306,7 @@ os.makedirs(output_directory_not_out_percentages, exist_ok=True)
 os.makedirs(output_directory_generate_runs_scored_vs_batting_position, exist_ok=True)
 os.makedirs(output_directory_generate_batting_strike_rate_vs_batting_position, exist_ok=True)
 os.makedirs(output_directory_wickets_taken, exist_ok=True)
+os.makedirs(output_directory_average_economy, exist_ok=True)
 
 json_file_path = os.path.abspath("../../data/players.json")
 
@@ -292,5 +330,6 @@ for player_name in players:
     generate_runs_scored_vs_batting_position_graph(data, output_directory_generate_runs_scored_vs_batting_position, player_name)
     generate_batting_strike_rate_vs_batting_position_graph(data, output_directory_generate_batting_strike_rate_vs_batting_position, player_name)
     generate_wickets_taken_graph(data, output_directory_wickets_taken, player_name)
+    generate_average_economy_graph(data, output_directory_average_economy, player_name)
 
 print("Graphs saved in their respective folders.")
