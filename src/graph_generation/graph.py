@@ -22,13 +22,9 @@ terminology_mapping = {
     "no": "not_outs",
     "hs": "high_score",
     "bta": "batting_average",
-    "btsr": "batting_strike_rate"
+    "btsr": "batting_strike_rate",
+    "wk": "wickets_taken"
 }
-
-import os
-import json
-import pandas as pd
-import plotly.express as px
 
 def generate_batting_strike_rate_vs_batting_position_graph(data, output_directory, player_name):
     batting_positions = []
@@ -218,6 +214,44 @@ def generate_fifties_vs_hundreds_graph(data, output_directory, player_name):
     image_file_path_fifties_vs_hundreds = os.path.join(output_directory, f"{player_name}_fifties_vs_hundreds.png")
     fig_fifties_vs_hundreds.write_image(image_file_path_fifties_vs_hundreds)
 
+
+def generate_wickets_taken_graph(data, output_directory, player_name):
+    years = []
+    wickets_taken = []
+
+    for stats_group in data["BOWLING"]["summary"]["groups"]:
+        if stats_group["type"] == "YEAR":
+            for stat in stats_group["stats"]:
+                year = int(stat["tt"].split()[-1])
+                year_data = {terminology_mapping[key]: value for key, value in stat.items() if key in terminology_mapping}
+                year_data["Year"] = year
+                if year >= 2017 and year_data["wickets_taken"] is not None:
+                    years.append(year)
+                    wickets_taken.append(int(year_data["wickets_taken"]))
+
+    player_title = player_name.replace('_', ' ').title()
+    df_wickets = pd.DataFrame({
+        "Year": years,
+        "Wickets Taken": wickets_taken
+    })
+
+    fig_wickets = px.line(df_wickets, x="Year", y="Wickets Taken", labels={"x": "Year", "y": "Wickets Taken"})
+    fig_wickets.update_layout(title=f"{player_title}'s Wickets Taken Over the Years (2017 and Beyond)")
+    fig_wickets.update_xaxes(title_text=None)
+    fig_wickets.add_annotation(
+        text="Year",
+        x=0.5,  
+        y=-0.1,  
+        xref="paper",
+        yref="paper",
+        showarrow=False
+    )
+    image_file_path_wickets = os.path.join(output_directory, f"{player_name}_wickets.png")
+    fig_wickets.write_image(image_file_path_wickets)
+
+
+
+
 output_directory_strike_rates = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Batting_Strike_Rates")
 output_directory_averages = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Batting_Averages")
 output_directory_runs = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Runs_Scored")
@@ -225,6 +259,7 @@ output_directory_fifties_vs_hundreds = os.path.abspath("./Overall_Player_Stats/B
 output_directory_not_out_percentages = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Not_Out_Percentages")
 output_directory_generate_runs_scored_vs_batting_position = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Runs_Scored_vs_Batting_Position")
 output_directory_generate_batting_strike_rate_vs_batting_position = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Batting_Strike_Rate_vs_Batting_Position")
+output_directory_wickets_taken = os.path.abspath("./Overall_Player_Stats/Bowling_Stats/Wickets_Taken")
 
 os.makedirs(output_directory_strike_rates, exist_ok=True)
 os.makedirs(output_directory_averages, exist_ok=True)
@@ -233,6 +268,7 @@ os.makedirs(output_directory_fifties_vs_hundreds, exist_ok=True)
 os.makedirs(output_directory_not_out_percentages, exist_ok=True)
 os.makedirs(output_directory_generate_runs_scored_vs_batting_position, exist_ok=True)
 os.makedirs(output_directory_generate_batting_strike_rate_vs_batting_position, exist_ok=True)
+os.makedirs(output_directory_wickets_taken, exist_ok=True)
 
 json_file_path = os.path.abspath("../../data/players.json")
 
@@ -255,5 +291,6 @@ for player_name in players:
     generate_fifties_vs_hundreds_graph(data, output_directory_fifties_vs_hundreds, player_name)
     generate_runs_scored_vs_batting_position_graph(data, output_directory_generate_runs_scored_vs_batting_position, player_name)
     generate_batting_strike_rate_vs_batting_position_graph(data, output_directory_generate_batting_strike_rate_vs_batting_position, player_name)
+    generate_wickets_taken_graph(data, output_directory_wickets_taken, player_name)
 
 print("Graphs saved in their respective folders.")
