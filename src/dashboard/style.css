@@ -1,0 +1,71 @@
+/* style.css */
+
+/* Body style */
+body {
+    background-color: #f7f7f7;
+    font-family: Arial, sans-serif;
+}
+
+/* Player list style */
+.player-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+
+.player-list button {
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    color: #007bff;
+}
+
+.player-list button:hover {
+    background-color: #f0f0f0;
+}
+
+/* Options container style */
+
+.options-container {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Stats container style */
+/*
+#statsContainer {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Button style */
+button.btn {
+    margin: 5px;
+}
+
+/* Heading style */
+h3 {
+    color: #007bff;
+}
+
+/* Added styling for h3 headings */
+h3.bg-primary {
+    color: white;
+}
+
+/* Player image style */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
