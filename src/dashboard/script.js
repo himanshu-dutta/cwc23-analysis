@@ -51,12 +51,17 @@ function showBattingStatsOptions(playerName) {
     graphContainer.innerHTML = "";
     const playerData = document.getElementById("playerData");
     playerData.innerHTML = `<h4>Batting Stats</h4>
-        <select id="battingStatsOptions" class="form-control">
-            <option value="Batting Average">Batting Average</option>
-            <option value="Batting Strike Rate">Batting Strike Rate</option>
-            <option value="Runs Scored">Runs Scored</option>
-        </select>
-        <button class="btn btn-primary" onclick="showBattingGraph('${playerName}')">Show Graph</button>`;
+    <select onchange="showBattingGraph('${playerName}')" id="battingStatsOptions" class="form-control">
+        <option selected value="Batting Average">Batting Average</option>
+        <option value="Batting Strike Rate">Batting Strike Rate</option>
+        <option value="Runs Scored">Runs Scored</option>
+        <option value="Fifties v/s Hundreds">Fifties v/s Hundreds</option>
+        <option value="Not Out Percentage">Not Out Percentage</option>
+        <option value="Runs Scored at Batting Position">Runs Scored at Batting Position</option>
+        <option value="Batting Strike Rate at Batting Position">Batting Strike Rate at Batting Position</option>
+    </select>`
+    showBattingGraph(playerName)
+        // <button class="btn btn-primary" onclick="showBattingGraph('${playerName}')">Show Graph</button>`;
 }
 
 // Function to display bowling stats options
@@ -64,12 +69,14 @@ function showBowlingStatsOptions(playerName) {
     const graphContainer = document.getElementById("statsContainer");
     graphContainer.innerHTML = "";
     const playerData = document.getElementById("playerData");
+    
     playerData.innerHTML = `<h4>Bowling Stats</h4>
-        <select id="bowlingStatsOptions" class="form-control">
+        <select onchange="showBowlingGraph('${playerName}')" id="bowlingStatsOptions" class="form-control">
             <option value="Average Economy">Average Economy</option>
             <option value="Wickets Taken">Wickets Taken</option>
-        </select>
-        <button class="btn btn-primary" onclick="showBowlingGraph('${playerName}')">Show Graph</button>`;
+        </select>`
+        // <button class="btn btn-primary" onclick="showBowlingGraph('${playerName}')">Show Graph</button>`;
+    showBowlingGraph(playerName)
 }
 
 // Function to display batting graphs
@@ -89,6 +96,18 @@ function showBattingGraph(playerName) {
             break;
         case "Runs Scored":
             imagePath = `../graph_generation/Overall_Player_Stats/Batting_Stats/Runs_Scored/${imageName}_runs.png`;
+            break;
+        case "Fifties v/s Hundreds":
+            imagePath = `../graph_generation/Overall_Player_Stats/Batting_Stats/Fifties_vs_Hundreds/${imageName}_fifties_vs_hundreds.png`;
+            break;
+        case "Not Out Percentage":
+            imagePath = `../graph_generation/Overall_Player_Stats/Batting_Stats/Not_Out_Percentages/${imageName}_not_out_percentages.png`;
+            break;
+        case "Runs Scored at Batting Position":
+            imagePath = `../graph_generation/Overall_Player_Stats/Batting_Stats/Runs_Scored_vs_Batting_Position/${imageName}_runs_scored.png`;
+            break;
+        case "Batting Strike Rate at Batting Position":
+            imagePath = `../graph_generation/Overall_Player_Stats/Batting_Stats/Batting_Strike_Rate_vs_Batting_Position/${imageName}_strike_rate.png`;
             break;
     }
 
