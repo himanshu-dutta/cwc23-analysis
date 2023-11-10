@@ -11,19 +11,28 @@
         <div class="row">
             <div class="col-md-3">
                 <h3 class="text-white bg-primary p-2">Players</h3>
-                <div id="playerList" class="player-list">
-                    <!-- Player names will be populated dynamically using JavaScript -->
+                <div id="playerDropdown" class="player-dropdown">
+                    <select id="playerSelect" class="form-control">
+                        <option value="" disabled selected>Select a player</option>
+                        <!-- Player names will be displayed here -->
+                    </select>
+                </div>
+                <div style="margin-bottom: 20px;"></div>
+                <h3 class="text-white bg-primary p-2">Optimal Team</h3>
+                <div id="teamDropdown" class="team-dropdown">
+                    <select id="teamSelect" class="form-control">
+                        <option value="" disabled selected>Select a team</option>
+                        <!-- Team names will be displayed here -->
+                    </select>
                 </div>
             </div>
             <div class="col-md-9">
                 <h3 class="text-white bg-primary p-2">Statistics</h3>
                 <div id="display_all_information" class="options-container">
                     <div id="playerOptions">
-                        
-                        <!-- Options will be populated dynamically using JavaScript -->
+                        <!-- Options will be displayed here -->
                     </div>
                     <div id="playerData">
-                        
                         <!-- Player introduction will be displayed here -->
                     </div>
                     <div id="statsContainer" class="mt-4">

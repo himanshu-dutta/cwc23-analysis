@@ -24,7 +24,8 @@ terminology_mapping = {
     "bta": "batting_average",
     "btsr": "batting_strike_rate",
     "wk": "wickets_taken",
-    "bwe": "average_economy"
+    "bwe": "average_economy",
+    "md": "maiden_overs"
 }
 
 def generate_batting_strike_rate_vs_batting_position_graph(data, output_directory, player_name):
@@ -224,11 +225,12 @@ def generate_wickets_taken_graph(data, output_directory, player_name):
         if stats_group["type"] == "YEAR":
             for stat in stats_group["stats"]:
                 year = int(stat["tt"].split()[-1])
-                year_data = {terminology_mapping[key]: value for key, value in stat.items() if key in terminology_mapping}
-                year_data["Year"] = year
-                if year_data["wickets_taken"] is not None:
-                    years.append(year)
-                    wickets_taken.append(int(year_data["wickets_taken"]))
+                if year >= 2017:  # Filter data for years 2017 and beyond
+                    year_data = {terminology_mapping[key]: value for key, value in stat.items() if key in terminology_mapping}
+                    year_data["Year"] = year
+                    if year_data["wickets_taken"] is not None:
+                        years.append(year)
+                        wickets_taken.append(int(year_data["wickets_taken"]))
 
     player_title = player_name.replace('_', ' ').title()
     df_wickets = pd.DataFrame({
@@ -259,11 +261,12 @@ def generate_average_economy_graph(data, output_directory, player_name):
         if stats_group["type"] == "YEAR":
             for stat in stats_group["stats"]:
                 year = int(stat["tt"].split()[-1])
-                year_data = {terminology_mapping[key]: value for key, value in stat.items() if key in terminology_mapping}
-                year_data["Year"] = year
-                if year_data["average_economy"] is not None:
-                    years.append(year)
-                    average_economy.append(float(year_data["average_economy"]))
+                if year >= 2017:  # Filter data for years 2017 and beyond
+                    year_data = {terminology_mapping[key]: value for key, value in stat.items() if key in terminology_mapping}
+                    year_data["Year"] = year
+                    if year_data["average_economy"] is not None:
+                        years.append(year)
+                        average_economy.append(float(year_data["average_economy"]))
 
     player_title = player_name.replace('_', ' ').title()
     df_average_economy = pd.DataFrame({
@@ -286,7 +289,41 @@ def generate_average_economy_graph(data, output_directory, player_name):
     image_file_path_average_economy = os.path.join(output_directory, f"{player_name}_average_economy.png")
     fig_average_economy.write_image(image_file_path_average_economy)
 
+def generate_maiden_overs_graph(data, output_directory, player_name):
+    years = []
+    maiden_overs = []
 
+    for stats_group in data["BOWLING"]["summary"]["groups"]:
+        if stats_group["type"] == "YEAR":
+            for stat in stats_group["stats"]:
+                year = int(stat["tt"].split()[-1])
+                if year >= 2017:  # Filter data for years 2017 and beyond
+                    year_data = {terminology_mapping[key]: value for key, value in stat.items() if key in terminology_mapping}
+                    year_data["Year"] = year
+                    if year_data["maiden_overs"] is not None:
+                        years.append(year)
+                        maiden_overs.append(int(year_data["maiden_overs"]))
+
+    player_title = player_name.replace('_', ' ').title()
+    df_maiden_overs = pd.DataFrame({
+        "Year": years,
+        "Maiden Overs": maiden_overs
+    })
+
+    fig_maiden_overs = px.line(df_maiden_overs, x="Year", y="Maiden Overs", labels={"x": "Year", "y": "Maiden Overs"})
+    fig_maiden_overs.update_layout(title=f"{player_title}'s Maiden Overs Over the Years (2017 and Beyond)")
+    fig_maiden_overs.update_xaxes(title_text=None)
+    fig_maiden_overs.update_xaxes(tickvals=years)
+    fig_maiden_overs.add_annotation(
+        text="Year",
+        x=0.5,
+        y=-0.1,
+        xref="paper",
+        yref="paper",
+        showarrow=False
+    )
+    image_file_path_maiden_overs = os.path.join(output_directory, f"{player_name}_maiden_overs.png")
+    fig_maiden_overs.write_image(image_file_path_maiden_overs)
 
 output_directory_strike_rates = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Batting_Strike_Rates")
 output_directory_averages = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Batting_Averages")
@@ -297,6 +334,7 @@ output_directory_generate_runs_scored_vs_batting_position = os.path.abspath("./O
 output_directory_generate_batting_strike_rate_vs_batting_position = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Batting_Strike_Rate_vs_Batting_Position")
 output_directory_wickets_taken = os.path.abspath("./Overall_Player_Stats/Bowling_Stats/Wickets_Taken")
 output_directory_average_economy = os.path.abspath("./Overall_Player_Stats/Bowling_Stats/Average_Economy")
+output_directory_maiden_overs = os.path.abspath("./Overall_Player_Stats/Bowling_Stats/Maiden_Overs")
 
 os.makedirs(output_directory_strike_rates, exist_ok=True)
 os.makedirs(output_directory_averages, exist_ok=True)
@@ -307,6 +345,8 @@ os.makedirs(output_directory_generate_runs_scored_vs_batting_position, exist_ok=
 os.makedirs(output_directory_generate_batting_strike_rate_vs_batting_position, exist_ok=True)
 os.makedirs(output_directory_wickets_taken, exist_ok=True)
 os.makedirs(output_directory_average_economy, exist_ok=True)
+os.makedirs(output_directory_maiden_overs, exist_ok=True)
+
 
 json_file_path = os.path.abspath("../../data/players.json")
 
@@ -331,5 +371,6 @@ for player_name in players:
     generate_batting_strike_rate_vs_batting_position_graph(data, output_directory_generate_batting_strike_rate_vs_batting_position, player_name)
     generate_wickets_taken_graph(data, output_directory_wickets_taken, player_name)
     generate_average_economy_graph(data, output_directory_average_economy, player_name)
+    generate_maiden_overs_graph(data, output_directory_maiden_overs, player_name)
 
 print("Graphs saved in their respective folders.")

@@ -7,7 +7,35 @@ function populatePlayerOptions(playerName) {
         <button class="btn btn-primary" onclick="showIntroduction('${playerName}')">Player Introduction</button>
         <button class="btn btn-primary" onclick="showBattingStatsOptions('${playerName}')">Batting Stats</button>
         <button class="btn btn-primary" onclick="showBowlingStatsOptions('${playerName}')">Bowling Stats</button>`;
-    playerOptions.style.display = "block"; // Show the options container
+    // playerOptions.style.display = "block"; // Show the options container
+}
+
+// Function to populate options for a selected team
+function populateTeamOptions(teamName) {
+    const playerOptions = document.getElementById("playerOptions");
+    playerOptions.innerHTML = '';
+    // Handle team selection logic here
+    // You can add code to display team-related options
+    playerOptions.innerHTML = `<h4>Optimal team for India v/s ${teamName}</h4>`;
+    // playerOptions.style.display = "block"; // Show the options container
+}
+
+// Function to handle player or team selection from the dropdown
+function handleSelection(dropdownType) {
+    const select = dropdownType === "player" ? document.getElementById("playerSelect") : document.getElementById("teamSelect");
+    const selectedValue = select.value;
+    if (selectedValue) {
+        // Clear existing player data and options
+        document.getElementById("playerData").innerHTML = "";
+        const graphContainer = document.getElementById("statsContainer");
+        graphContainer.innerHTML = "";
+
+        if (dropdownType === "player") {
+            populatePlayerOptions(selectedValue);
+        } else {
+            populateTeamOptions(selectedValue);
+        }
+    }
 }
 
 // Function to display player introduction
@@ -138,8 +166,9 @@ function showBowlingGraph(playerName) {
     <img src="${imagePath}" alt="${selectedOption} Graph" width="800" height="600">`;
 }
 
-// Populate the player list with player names and handle clicks
-const playerList = document.getElementById("playerList");
+
+// Initialize the "Players" dropdown with player names
+const playerSelect = document.getElementById("playerSelect");
 const players = [
     "Rohit Sharma",
     "Hardik Pandya",
@@ -157,17 +186,44 @@ const players = [
     "Mohammed Siraj",
     "Kuldeep Yadav"
 ];
-players.forEach((player) => {
-    const listItem = document.createElement("button");
-    listItem.className = "btn btn-light mb-2";
-    listItem.textContent = player;
-    listItem.addEventListener("click", () => {
-        // document.getElementById("display_all_information").innerHTML = "";
 
-        document.getElementById("playerData").innerHTML = ""; // Clear the playerData div
-        const graphContainer = document.getElementById("statsContainer");
-        graphContainer.innerHTML = "";
-        populatePlayerOptions(player);
-    });
-    playerList.appendChild(listItem);
+players.forEach((player) => {
+    const option = document.createElement("option");
+    option.value = player;
+    option.text = player;
+    playerSelect.appendChild(option);
+});
+
+// Initialize the "Optimal Team" dropdown with team names
+const teamSelect = document.getElementById("teamSelect");
+const teams = [
+    "Australia",
+    "England",
+    "Pakistan",
+    "New Zealand",
+    "South Africa",
+    "Sri Lanka",
+    "Bangladesh",
+    "West Indies",
+    "Afghanistan"
+];
+
+teams.forEach((team) => {
+    const option = document.createElement("option");
+    option.value = team;
+    option.text = team;
+    teamSelect.appendChild(option);
+});
+
+// Add event listeners for player and team selection
+playerSelect.addEventListener("change", () => {
+    handleSelection("player");
+    // Clear the team dropdown when a player is selected
+    teamSelect.selectedIndex = 0;
+});
+
+teamSelect.addEventListener("change", () => {
+    handleSelection("team");
+    // Clear the player dropdown when a team is selected
+    playerSelect.selectedIndex = 0;
 });
