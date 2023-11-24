@@ -4,9 +4,10 @@
 function populatePlayerOptions(playerName) {
     const playerOptions = document.getElementById("playerOptions");
     playerOptions.innerHTML = `<h4>${playerName}</h4>
-        <button class="btn btn-primary" onclick="showIntroduction('${playerName}')">Player Introduction</button>
-        <button class="btn btn-primary" onclick="showBattingStatsOptions('${playerName}')">Batting Stats</button>
-        <button class="btn btn-primary" onclick="showBowlingStatsOptions('${playerName}')">Bowling Stats</button>`;
+        <button class="btn right_pane_items" onclick="showIntroduction('${playerName}')">Player Introduction</button>
+        <button class="btn right_pane_items" onclick="showBattingStatsOptions('${playerName}')">Key Batting Stats</button>
+        <button class="btn right_pane_items" onclick="showBowlingStatsOptions('${playerName}')">Key Bowling Stats</button>
+        <button class="btn right_pane_items" onclick="showVsOtherTeamsStatsOptions('${playerName}')">Vs Other Teams</button>`;
     // playerOptions.style.display = "block"; // Show the options container
 }
 
@@ -45,22 +46,22 @@ function showIntroduction(playerName) {
     graphContainer.innerHTML = "";
 
     const playerIntroductions = {
-        "Rohit Sharma": "Rohit Sharma is an Indian cricketer known for his elegant batting style. He is one of the best opening batsmen in the world.",
-        "Hardik Pandya": "Hardik Pandya is an Indian all-rounder known for his explosive batting and effective bowling. He plays a key role in the team's success.",
-        "Shubman Gill": "Shubman Gill is a young Indian cricketer who has shown great promise as a top-order batsman.",
-        "Virat Kohli": "Virat Kohli is the captain of the Indian cricket team and is considered one of the best batsmen in the world.",
-        "Shreyas Iyer": "Shreyas Iyer is a talented middle-order batsman known for his stylish and aggressive batting.",
-        "Ishan Kishan": "Ishan Kishan is a wicketkeeper-batsman who has impressed with his aggressive batting and wicket-keeping skills.",
-        "KL Rahul": "KL Rahul is a versatile cricketer known for his batting and wicket-keeping abilities.",
-        "Suryakumar Yadav": "Suryakumar Yadav is a promising batsman known for his aggressive batting in the middle order.",
-        "Ravindra Jadeja": "Ravindra Jadeja is an exceptional all-rounder who contributes with both bat and ball.",
-        "Axar Patel": "Axar Patel is a spin-bowling all-rounder known for his tight bowling and handy batting contributions.",
-        "Shardul Thakur": "Shardul Thakur is a fast bowler known for his ability to pick up crucial wickets in pressure situations.",
-        "Jasprit Bumrah": "Jasprit Bumrah is India's premier fast bowler and is known for his unorthodox bowling action and deadly yorkers.",
-        "Mohammed Shami": "Mohammed Shami is a key fast bowler for the Indian cricket team known for his seam and swing bowling.",
-        "Mohammed Siraj": "Mohammed Siraj is a young and promising fast bowler who has shown great potential with his pace and control.",
-        "Kuldeep Yadav": "Kuldeep Yadav is a left-arm chinaman bowler known for his spin variations.",
-    };
+        "Rohit Sharma": "Rohit Sharma is an Indian cricketer known for his elegant batting style. He is one of the best opening batsmen in the world. As an opening batsman, Rohit provides a solid start to the innings, displaying excellent timing and placement. His ability to score big centuries makes him a key player in the team's top order.",
+        "Hardik Pandya": "Hardik Pandya is an Indian all-rounder known for his explosive batting and effective bowling. He plays a key role in the team's success. Hardik is a powerful hitter, contributing quick runs in the middle and lower order. His medium-fast bowling adds balance to the team, providing crucial breakthroughs.",
+        "Shubman Gill": "Shubman Gill is a young Indian cricketer who has shown great promise as a top-order batsman. Gill's technically sound batting and ability to handle both pace and spin make him a valuable asset in the team's batting lineup. As a top-order batsman, he contributes to building a solid foundation for the team.",
+        "Virat Kohli": "Virat Kohli is the captain of the Indian cricket team and is considered one of the best batsmen in the world. Kohli's exceptional batting skills, especially during chases, make him a reliable figure in the team. As the captain, his strong leadership qualities inspire the team to perform at its best.",
+        "Shreyas Iyer": "Shreyas Iyer is a talented middle-order batsman known for his stylish and aggressive batting. Iyer plays a crucial role in stabilizing the innings and accelerating the run rate when needed. His ability to play under pressure and contribute vital innings makes him a key player in the middle order.",
+        "Ishan Kishan": "Ishan Kishan is a wicketkeeper-batsman who has impressed with his aggressive batting and wicket-keeping skills. Kishan's dynamic style of play makes him a valuable asset in the team's batting lineup. As a wicketkeeper, he adds depth to the team's fielding unit.",
+        "KL Rahul": "KL Rahul is a versatile cricketer known for his batting and wicket-keeping abilities. Rahul's elegant batting style and adaptability to different formats make him a reliable choice in the team. As a wicketkeeper-batsman, he provides flexibility to the team's playing XI.",
+        "Suryakumar Yadav": "Suryakumar Yadav is a promising batsman known for his aggressive batting in the middle order. Yadav's ability to play innovative shots and accelerate the run rate makes him a valuable asset in the team. He adds depth to the middle-order batting lineup.",
+        "Ravindra Jadeja": "Ravindra Jadeja is an exceptional all-rounder who contributes with both bat and ball. Jadeja's exceptional fielding, reliable left-arm spin, and valuable contributions with the bat make him a crucial player in all formats. His all-round abilities provide balance to the team.",
+        "Axar Patel": "Axar Patel is a spin-bowling all-rounder known for his tight bowling and handy batting contributions. Patel's accuracy in spin bowling and ability to contribute quick runs down the order make him a versatile player. His spin variations add depth to the team's bowling attack.",
+        "Shardul Thakur": "Shardul Thakur is a fast bowler known for his ability to pick up crucial wickets in pressure situations. Thakur's fast bowling, especially in the death overs, makes him a key player in the team's pace bowling department. He provides breakthroughs in critical phases of the game.",
+        "Jasprit Bumrah": "Jasprit Bumrah is India's premier fast bowler and is known for his unorthodox bowling action and deadly yorkers. Bumrah's ability to generate pace and movement with a unique bowling action makes him a challenging bowler for opposition batsmen. He leads the team's pace attack.",
+        "Mohammed Shami": "Mohammed Shami is a key fast bowler for the Indian cricket team known for his seam and swing bowling. Shami's ability to extract movement from the pitch and consistently pick up wickets makes him a crucial player in the team's pace bowling lineup. He plays a pivotal role in both red and white-ball cricket.",
+        "Mohammed Siraj": "Mohammed Siraj is a young and promising fast bowler who has shown great potential with his pace and control. Siraj's ability to bowl with pace and accuracy, coupled with his knack for picking up wickets, makes him an exciting prospect in the team's fast bowling unit. He has showcased his skills in both Test and limited-overs cricket.",
+        "Kuldeep Yadav": "Kuldeep Yadav is a left-arm chinaman bowler known for his spin variations. Kuldeep's ability to generate turn and deceive batsmen with his wrist spin makes him a potent force in the team's spin bowling department. He adds a different dimension to the team's bowling strategy."
+      };
 
     // Check if the playerName exists in playerIntroductions
     if (playerIntroductions[playerName]) {
@@ -102,9 +103,25 @@ function showBowlingStatsOptions(playerName) {
         <select onchange="showBowlingGraph('${playerName}')" id="bowlingStatsOptions" class="form-control">
             <option value="Average Economy">Average Economy</option>
             <option value="Wickets Taken">Wickets Taken</option>
+            <option value="Maiden Overs">Maiden Overs</option>
+            <option value="Bowling Strike Rate">Bowling Strike Rate</option>
+            <option value="Overs Bowled">Overs Bowled</option>
         </select>`
         // <button class="btn btn-primary" onclick="showBowlingGraph('${playerName}')">Show Graph</button>`;
     showBowlingGraph(playerName)
+}
+
+// Function to display batting stats options
+function showVsOtherTeamsStatsOptions(playerName) {
+    const graphContainer = document.getElementById("statsContainer");
+    graphContainer.innerHTML = "";
+    const playerData = document.getElementById("playerData");
+    playerData.innerHTML = `<h4>Stats</h4>
+    <select onchange="showVsOtherTeamsGraphs('${playerName}')" id="VsOtherTeamsOptions" class="form-control">
+        <option selected value="Batting Average">Batting Average</option>
+    </select>`
+    showVsOtherTeamsGraphs(playerName)
+        // <button class="btn btn-primary" onclick="showBattingGraph('${playerName}')">Show Graph</button>`;
 }
 
 // Function to display batting graphs
@@ -158,6 +175,15 @@ function showBowlingGraph(playerName) {
             break;
         case "Wickets Taken":
             imagePath = `../graph_generation/Overall_Player_Stats/Bowling_Stats/Wickets_Taken/${imageName}_wickets.png`;
+            break;
+        case "Maiden Overs":
+            imagePath = `../graph_generation/Overall_Player_Stats/Bowling_Stats/Maiden_Overs/${imageName}_maiden_overs.png`;
+            break;
+        case "Bowling Strike Rate":
+            imagePath = `../graph_generation/Overall_Player_Stats/Bowling_Stats/Bowling_Strike_Rate/${imageName}_bowling_strike_rate.png`;
+            break;
+        case "Overs Bowled":
+            imagePath = `../graph_generation/Overall_Player_Stats/Bowling_Stats/Overs_Bowled/${imageName}_overs_bowled.png`;
             break;
     }
 

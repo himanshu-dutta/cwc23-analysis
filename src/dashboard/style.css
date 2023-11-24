@@ -1,9 +1,41 @@
-/* style.css */
-
 /* Body style */
 body {
-    background-color: #f7f7f7;
-    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #001F3F, #003366); /* Fallback color if gradients are not supported */
+    /* background-image: url("./images/bg_img.webp"); */
+    /* background-size: cover; Cover the entire screen */
+    /* background-repeat: no-repeat; Do not repeat the background image */
+    font-family: Arial, sans-serif;  
+    margin: 0;
+}
+
+nav {
+    background: linear-gradient(rgba(0, 51, 102, 0.7), rgb(21, 111, 202));
+    /* background-color: white; */
+    font-size: 30px;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    text-align: center;
+    padding: 0px 0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trophy-icon {
+    width: 80px; /* Adjust the size of the icon */
+    height: 80px;
+    background: url('./images/cricket_ball.png') center/contain no-repeat; /* Replace 'path/to/your/trophy-image.png' with the actual path to your image */
+    animation: rotate 4s linear infinite; /* Adjust the animation duration and type */
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* Player dropdown style */
@@ -13,26 +45,60 @@ body {
 
 /* Options container style */
 .options-container {
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 1); /* Adjust the alpha (last) value for transparency */
     border: 1px solid #dddddd;
     padding: 20px;
     border-radius: 5px;
     margin-top: 10px;
 }
 
+
+.left_pane_dashboard {
+    background-color: white; /* Set the background color to white */
+    padding: 1rem;
+    color: white;
+    border-radius: 10px; /* Optional: Add rounded corners */
+}
+
+.left_pane_items {
+    background: beige;
+    padding: 1rem;
+    color: black;
+    border-radius: 10px; 
+}
+
+.right_pane_items {
+    background: #094a8b;
+    padding: 0.5 rem;
+    color: white;
+}
+
+.dashboard_title {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 60px;
+    font-weight: bold;
+    background: white;
+    /* background: linear-gradient(#6A5ACD, #7B68EE, #9370DB); */
+    -webkit-text-fill-color: transparent;
+}
+
 /* Button style */
 button.btn {
     margin: 5px;
+    /*background-color: #D2FDFF;*/
 }
 
 /* Heading style */
 h3 {
-    color: #007bff;
+    color: #303C6C;
 }
 
 /* Added styling for h3 headings */
 h3.bg-primary {
-    color: white;
+    color: #B4DFE5;
+    font-size: 36px; /* Adjust font size based on your preference */
+    margin-bottom: 20px; /* Add margin for spacing */
 }
 
 /* Player image style */
