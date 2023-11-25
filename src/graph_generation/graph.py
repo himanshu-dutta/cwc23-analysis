@@ -25,7 +25,9 @@ terminology_mapping = {
     "btsr": "batting_strike_rate",
     "wk": "wickets_taken",
     "bwe": "average_economy",
-    "md": "maiden_overs"
+    "md": "maiden_overs",
+    "bwsr": "bowling_strike_rate",
+    "ov": "overs_bowled"
 }
 
 def generate_batting_strike_rate_vs_batting_position_graph(data, output_directory, player_name):
@@ -325,6 +327,126 @@ def generate_maiden_overs_graph(data, output_directory, player_name):
     image_file_path_maiden_overs = os.path.join(output_directory, f"{player_name}_maiden_overs.png")
     fig_maiden_overs.write_image(image_file_path_maiden_overs)
 
+def generate_bowling_strike_rate_graph(data, output_directory, player_name):
+    years = []
+    bowling_strike_rates = []
+
+    for stats_group in data["BOWLING"]["summary"]["groups"]:
+        if stats_group["type"] == "YEAR":
+            for stat in stats_group["stats"]:
+                year = int(stat["tt"].split()[-1])
+                if year >= 2017:  # Filter data for years 2017 and beyond
+                    year_data = {terminology_mapping[key]: value for key, value in stat.items() if key in terminology_mapping}
+                    year_data["Year"] = year
+                    if year_data["bowling_strike_rate"] is not None:
+                        years.append(year)
+                        bowling_strike_rates.append(float(year_data["bowling_strike_rate"]))
+
+    player_title = player_name.replace('_', ' ').title()
+    df_bowling_strike_rate = pd.DataFrame({
+        "Year": years,
+        "Bowling Strike Rate": bowling_strike_rates
+    })
+
+    fig_bowling_strike_rate = px.line(df_bowling_strike_rate, x="Year", y="Bowling Strike Rate", labels={"x": "Year", "y": "Bowling Strike Rate"})
+    fig_bowling_strike_rate.update_layout(title=f"{player_title}'s Bowling Strike Rate Over the Years (2017 and Beyond)")
+    fig_bowling_strike_rate.update_xaxes(title_text=None)
+    fig_bowling_strike_rate.update_xaxes(tickvals=years)
+    fig_bowling_strike_rate.add_annotation(
+        text="Year",
+        x=0.5,
+        y=-0.1,
+        xref="paper",
+        yref="paper",
+        showarrow=False
+    )
+    image_file_path_bowling_strike_rate = os.path.join(output_directory, f"{player_name}_bowling_strike_rate.png")
+    fig_bowling_strike_rate.write_image(image_file_path_bowling_strike_rate)
+
+def generate_overs_bowled_graph(data, output_directory, player_name):
+    years = []
+    total_overs_bowled = []
+
+    for stats_group in data["BOWLING"]["summary"]["groups"]:
+        if stats_group["type"] == "YEAR":
+            for stat in stats_group["stats"]:
+                year = int(stat["tt"].split()[-1])
+                if year >= 2017:  # Filter data for years 2017 and beyond
+                    year_data = {terminology_mapping[key]: value for key, value in stat.items() if key in terminology_mapping}
+                    year_data["Year"] = year
+                    if year_data["overs_bowled"] is not None:
+                        years.append(year)
+                        total_overs_bowled.append(float(year_data["overs_bowled"]))
+
+    player_title = player_name.replace('_', ' ').title()
+    df_overs_bowled = pd.DataFrame({
+        "Year": years,
+        "Total Overs Bowled": total_overs_bowled
+    })
+
+    fig_overs_bowled = px.line(df_overs_bowled, x="Year", y="Total Overs Bowled", labels={"x": "Year", "y": "Total Overs Bowled"})
+    fig_overs_bowled.update_layout(title=f"{player_title}'s Total Overs Bowled Over the Years (2017 and Beyond)")
+    fig_overs_bowled.update_xaxes(title_text=None)
+    fig_overs_bowled.update_xaxes(tickvals=years)  
+    fig_overs_bowled.add_annotation(
+        text="Year",
+        x=0.5,
+        y=-0.1,
+        xref="paper",
+        yref="paper",
+        showarrow=False
+    )
+    image_file_path_overs_bowled = os.path.join(output_directory, f"{player_name}_overs_bowled.png")
+    fig_overs_bowled.write_image(image_file_path_overs_bowled)
+
+def generate_runs_scored_against_individual_teams_graph(player_data, output_directory, player_name):
+    for stats_group in data["BATTING"]["summary"]["groups"]:
+        if stats_group["type"] == "OPPOSITION_TEAM":
+            opposition_data = stats_group.get("stats", [])
+            break
+
+    runs_data = []
+    for opposition in opposition_data:
+        opposition_name = opposition.get("tt", "")
+        if(opposition_name in ["vs Australia", "vs England", "vs Pakistan", "vs New Zealand", "vs Sri Lanka", "vs Bangladesh", "vs West Indies", "vs Afghanistan"]):
+            runs_data.append({
+                "Opposition": opposition_name,
+                "Runs Scored": opposition.get("rn", 0),
+            })
+
+    df = pd.DataFrame(runs_data)
+    fig = px.bar(df, x="Opposition", y="Runs Scored", labels={"x": "Opposition Team", "y": "Runs Scored"})
+    
+    player_title = player_name.replace('_', ' ').title()
+    fig.update_layout(title=f"{player_title}'s Runs Scored Against Individial Teams")
+    image_file_path_runs_scored_against_individual_teams = os.path.join(output_directory, f"{player_name}_runs_scored_against_individual_teams.png")
+    fig.write_image(image_file_path_runs_scored_against_individual_teams)
+
+def generate_batting_strike_rate_against_individual_teams_graph(player_data, output_directory, player_name):
+    for stats_group in data["BATTING"]["summary"]["groups"]:
+        if stats_group["type"] == "OPPOSITION_TEAM":
+            opposition_data = stats_group.get("stats", [])
+            break
+
+    runs_data = []
+    for opposition in opposition_data:
+        opposition_name = opposition.get("tt", "")
+        if(opposition_name in ["vs Australia", "vs England", "vs Pakistan", "vs New Zealand", "vs Sri Lanka", "vs Bangladesh", "vs West Indies", "vs Afghanistan"]):
+            runs_data.append({
+                "Opposition": opposition_name,
+                "Batting Strike Rate": opposition.get("btsr", 0),
+            })
+
+    df = pd.DataFrame(runs_data)
+    fig = px.bar(df, x="Opposition", y="Batting Strike Rate", labels={"x": "Opposition Team", "y": "Batting Strike Rate"})
+    
+    player_title = player_name.replace('_', ' ').title()
+    fig.update_layout(title=f"{player_title}'s Batting Strike Rate Against Individial Teams")
+    image_file_path_batting_strike_rate_against_individual_teams = os.path.join(output_directory, f"{player_name}_batting_strike_rate_against_individual_teams.png")
+    fig.write_image(image_file_path_batting_strike_rate_against_individual_teams)
+
+
+
 output_directory_strike_rates = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Batting_Strike_Rates")
 output_directory_averages = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Batting_Averages")
 output_directory_runs = os.path.abspath("./Overall_Player_Stats/Batting_Stats/Runs_Scored")
@@ -335,6 +457,10 @@ output_directory_generate_batting_strike_rate_vs_batting_position = os.path.absp
 output_directory_wickets_taken = os.path.abspath("./Overall_Player_Stats/Bowling_Stats/Wickets_Taken")
 output_directory_average_economy = os.path.abspath("./Overall_Player_Stats/Bowling_Stats/Average_Economy")
 output_directory_maiden_overs = os.path.abspath("./Overall_Player_Stats/Bowling_Stats/Maiden_Overs")
+output_directory_bowling_strike_rate = os.path.abspath("./Overall_Player_Stats/Bowling_Stats/Bowling_Strike_Rate")
+output_directory_overs_bowled = os.path.abspath("./Overall_Player_Stats/Bowling_Stats/Overs_Bowled")
+output_directory_runs_scored_against_individual_teams = os.path.abspath("./Vs_Other_Teams/Runs_Scored_Against_Individual_Teams")
+output_directory_batting_strike_rate_against_individual_teams = os.path.abspath("./Vs_Other_Teams/Batting_Strike_Rate_Against_Individual_Teams")
 
 os.makedirs(output_directory_strike_rates, exist_ok=True)
 os.makedirs(output_directory_averages, exist_ok=True)
@@ -346,6 +472,10 @@ os.makedirs(output_directory_generate_batting_strike_rate_vs_batting_position, e
 os.makedirs(output_directory_wickets_taken, exist_ok=True)
 os.makedirs(output_directory_average_economy, exist_ok=True)
 os.makedirs(output_directory_maiden_overs, exist_ok=True)
+os.makedirs(output_directory_bowling_strike_rate, exist_ok=True)
+os.makedirs(output_directory_overs_bowled, exist_ok=True)
+os.makedirs(output_directory_runs_scored_against_individual_teams, exist_ok=True)
+os.makedirs(output_directory_batting_strike_rate_against_individual_teams, exist_ok=True)
 
 
 json_file_path = os.path.abspath("../../data/players.json")
@@ -372,5 +502,9 @@ for player_name in players:
     generate_wickets_taken_graph(data, output_directory_wickets_taken, player_name)
     generate_average_economy_graph(data, output_directory_average_economy, player_name)
     generate_maiden_overs_graph(data, output_directory_maiden_overs, player_name)
+    generate_bowling_strike_rate_graph(data, output_directory_bowling_strike_rate, player_name)
+    generate_overs_bowled_graph(data, output_directory_overs_bowled, player_name)
+    generate_runs_scored_against_individual_teams_graph(data, output_directory_runs_scored_against_individual_teams, player_name)
+    generate_batting_strike_rate_against_individual_teams_graph(data, output_directory_batting_strike_rate_against_individual_teams, player_name)
 
 print("Graphs saved in their respective folders.")
