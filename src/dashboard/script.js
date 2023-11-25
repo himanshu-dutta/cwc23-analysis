@@ -297,6 +297,10 @@ function showVsOtherTeamsStatsOptions(playerName) {
     <select onchange="showVsOtherTeamsGraph('${playerName}')" id="VsOtherTeamsOptions" class="form-control dropdown">
         <option value="Total Runs">Total Runs</option>
         <option value="Batting Strike Rate">Batting Strike Rate</option>
+        <option value="Not Out Percentages">Not Out Percentages</option>
+        <option value="Wickets Taken">Wickets Taken</option>
+        <option value="Average Economy">Average Economy</option>
+        <option value="Bowling Strike Rate">Bowling Strike Rate</option>
     </select>`
     showVsOtherTeamsGraph(playerName)
 }
@@ -383,6 +387,18 @@ function showVsOtherTeamsGraph(playerName) {
             break;
         case "Batting Strike Rate":
             imagePath = `../graph_generation/Vs_Other_Teams/Batting_Strike_Rate_Against_Individual_Teams/${imageName}_batting_strike_rate_against_individual_teams.png`;
+            break;
+        case "Not Out Percentages":
+            imagePath = `../graph_generation/Vs_Other_Teams/Not_Out_Percentages_Against_Individual_Teams/${imageName}_not_out_percentages_against_individual_teams.png`;
+            break;
+        case "Wickets Taken":
+            imagePath = `../graph_generation/Vs_Other_Teams/Wickets_Taken_Against_Individual_Teams/${imageName}_wickets_taken_against_individual_teams.png`;
+            break;
+        case "Average Economy":
+            imagePath = `../graph_generation/Vs_Other_Teams/Average_Economy_Against_Individual_Teams/${imageName}_average_economy_against_individual_teams.png`;
+            break;
+        case "Bowling Strike Rate":
+            imagePath = `../graph_generation/Vs_Other_Teams/Bowling_Strike_Rate_Against_Individual_Teams/${imageName}_bowling_strike_rate_against_individual_teams.png`;
             break;
     }
 
