@@ -1,32 +1,33 @@
 /* Body style */
 body {
-    background: linear-gradient(to right, #001F3F, #003366); /* Fallback color if gradients are not supported */
-    /* background-image: url("./images/bg_img.webp"); */
-    /* background-size: cover; Cover the entire screen */
-    /* background-repeat: no-repeat; Do not repeat the background image */
-    font-family: Arial, sans-serif;  
+    background: #094b8d;
+    font-family: 'Times New Roman', Times, serif;  
     margin: 0;
 }
 
 nav {
-    background: linear-gradient(rgba(0, 51, 102, 0.7), rgb(21, 111, 202));
-    /* background-color: white; */
+    background: #001f3f;
+    box-shadow: 0 0 15px 0px #000000;
+    border-bottom: 6px solid white;
     font-size: 30px;
-    font-family: 'Montserrat', sans-serif;
     color: white;
     text-align: center;
     padding: 0px 0;
-    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.trophy-icon {
-    width: 80px; /* Adjust the size of the icon */
+.rotating-ball-icon {
+    width: 80px; 
     height: 80px;
-    background: url('./images/cricket_ball.png') center/contain no-repeat; /* Replace 'path/to/your/trophy-image.png' with the actual path to your image */
-    animation: rotate 4s linear infinite; /* Adjust the animation duration and type */
+    background: url('./images/cricket_ball.png') center/contain no-repeat;
+    animation: rotate 4s linear infinite; 
+}
+
+.resized-image {
+    width: 210px; 
+    height: 190px; 
 }
 
 @keyframes rotate {
@@ -38,14 +39,12 @@ nav {
     }
 }
 
-/* Player dropdown style */
 .player-dropdown {
     margin-top: 10px;
 }
 
-/* Options container style */
 .options-container {
-    background-color: rgba(255, 255, 255, 1); /* Adjust the alpha (last) value for transparency */
+    background-color: rgba(255, 255, 255, 1); 
     border: 1px solid #dddddd;
     padding: 20px;
     border-radius: 5px;
@@ -54,21 +53,22 @@ nav {
 
 
 .left_pane_dashboard {
-    background-color: white; /* Set the background color to white */
+    background-color: white; 
     padding: 1rem;
     color: white;
-    border-radius: 10px; /* Optional: Add rounded corners */
+    border-radius: 10px; 
 }
 
 .left_pane_items {
-    background: beige;
+    background: rgba(245, 245, 255, 0.719); 
+    /* background: #c65142; */
     padding: 1rem;
     color: black;
     border-radius: 10px; 
 }
 
 .right_pane_items {
-    background: #094a8b;
+    background: #094a8be4;
     padding: 0.5 rem;
     color: white;
 }
@@ -79,32 +79,45 @@ nav {
     font-size: 60px;
     font-weight: bold;
     background: white;
-    /* background: linear-gradient(#6A5ACD, #7B68EE, #9370DB); */
     -webkit-text-fill-color: transparent;
 }
 
-/* Button style */
 button.btn {
     margin: 5px;
-    /*background-color: #D2FDFF;*/
 }
 
-/* Heading style */
+button.btn:hover {
+    box-shadow: 0 0 10px 0 #29265f;
+    color: white;
+}
+
 h3 {
     color: #303C6C;
 }
 
-/* Added styling for h3 headings */
 h3.bg-primary {
     color: #B4DFE5;
-    font-size: 36px; /* Adjust font size based on your preference */
-    margin-bottom: 20px; /* Add margin for spacing */
+    font-size: 36px; 
+    margin-bottom: 20px; 
 }
 
-/* Player image style */
 img {
     max-width: 100%;
     height: auto;
     display: block;
     margin: 0 auto;
+}
+
+.heading {
+    color: #001f3f;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.player-heading{
+    margin-bottom: 1rem;
+}
+
+.dropdown{
+    border: 2px solid #0161c1;
 }

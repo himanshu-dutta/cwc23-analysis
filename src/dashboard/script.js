@@ -3,22 +3,201 @@
 // Function to populate options for a selected player
 function populatePlayerOptions(playerName) {
     const playerOptions = document.getElementById("playerOptions");
-    playerOptions.innerHTML = `<h4>${playerName}</h4>
+    playerOptions.innerHTML = `<h4 class="heading player-heading">${playerName}</h4>
         <button class="btn right_pane_items" onclick="showIntroduction('${playerName}')">Player Introduction</button>
         <button class="btn right_pane_items" onclick="showBattingStatsOptions('${playerName}')">Key Batting Stats</button>
         <button class="btn right_pane_items" onclick="showBowlingStatsOptions('${playerName}')">Key Bowling Stats</button>
         <button class="btn right_pane_items" onclick="showVsOtherTeamsStatsOptions('${playerName}')">Vs Other Teams</button>`;
-    // playerOptions.style.display = "block"; // Show the options container
 }
 
 // Function to populate options for a selected team
 function populateTeamOptions(teamName) {
     const playerOptions = document.getElementById("playerOptions");
-    playerOptions.innerHTML = '';
-    // Handle team selection logic here
-    // You can add code to display team-related options
-    playerOptions.innerHTML = `<h4>Optimal team for India v/s ${teamName}</h4>`;
-    // playerOptions.style.display = "block"; // Show the options container
+    playerOptions.innerHTML = ''; // Clear existing content
+
+    // JSON data obtained after EDA
+    const optimalTeamData = {
+        "Australia": [
+            "Rohit Sharma",
+            "Hardik Pandya",
+            "Shubman Gill",
+            "Virat Kohli",
+            "Shreyas Iyer",
+            "Ishan Kishan",
+            "KL Rahul",
+            "Suryakumar Yadav",
+            "Ravindra Jadeja",
+            "Axar Patel",
+            "Shardul Thakur"
+        ],
+        "England": [
+            "Rohit Sharma",
+            "Hardik Pandya",
+            "Shubman Gill",
+            "Virat Kohli",
+            "Shreyas Iyer",
+            "Ishan Kishan",
+            "KL Rahul",
+            "Suryakumar Yadav",
+            "Ravindra Jadeja",
+            "Axar Patel",
+            "Shardul Thakur"
+        ],
+        "Pakistan": [
+            "Rohit Sharma",
+            "Hardik Pandya",
+            "Shubman Gill",
+            "Virat Kohli",
+            "Shreyas Iyer",
+            "Ishan Kishan",
+            "KL Rahul",
+            "Suryakumar Yadav",
+            "Ravindra Jadeja",
+            "Axar Patel",
+            "Shardul Thakur"
+        ],
+        "New Zealand": [
+            "Rohit Sharma",
+            "Hardik Pandya",
+            "Shubman Gill",
+            "Virat Kohli",
+            "Shreyas Iyer",
+            "Ishan Kishan",
+            "KL Rahul",
+            "Suryakumar Yadav",
+            "Ravindra Jadeja",
+            "Axar Patel",
+            "Shardul Thakur"
+        ],
+        "South Africa": [
+            "Rohit Sharma",
+            "Hardik Pandya",
+            "Shubman Gill",
+            "Virat Kohli",
+            "Shreyas Iyer",
+            "Ishan Kishan",
+            "KL Rahul",
+            "Suryakumar Yadav",
+            "Ravindra Jadeja",
+            "Axar Patel",
+            "Shardul Thakur"
+        ],
+        "Sri Lanka": [
+            "Rohit Sharma",
+            "Hardik Pandya",
+            "Shubman Gill",
+            "Virat Kohli",
+            "Shreyas Iyer",
+            "Ishan Kishan",
+            "KL Rahul",
+            "Suryakumar Yadav",
+            "Ravindra Jadeja",
+            "Axar Patel",
+            "Shardul Thakur"
+        ],
+        "Bangladesh": [
+            "Rohit Sharma",
+            "Hardik Pandya",
+            "Shubman Gill",
+            "Virat Kohli",
+            "Shreyas Iyer",
+            "Ishan Kishan",
+            "KL Rahul",
+            "Suryakumar Yadav",
+            "Ravindra Jadeja",
+            "Axar Patel",
+            "Shardul Thakur"
+        ],
+        "West Indies": [
+            "Rohit Sharma",
+            "Hardik Pandya",
+            "Shubman Gill",
+            "Virat Kohli",
+            "Shreyas Iyer",
+            "Ishan Kishan",
+            "KL Rahul",
+            "Suryakumar Yadav",
+            "Ravindra Jadeja",
+            "Axar Patel",
+            "Shardul Thakur"
+        ],
+        "Afghanistan": [
+            "Rohit Sharma",
+            "Hardik Pandya",
+            "Shubman Gill",
+            "Virat Kohli",
+            "Shreyas Iyer",
+            "Ishan Kishan",
+            "KL Rahul",
+            "Suryakumar Yadav",
+            "Ravindra Jadeja",
+            "Axar Patel",
+            "Shardul Thakur"
+        ]
+    };
+    
+    
+// Display team name
+let htmlContent = '';
+
+htmlContent += `<h4 class="heading">Optimal team for India v/s ${teamName}</h4>`;
+
+// Table for displaying images (4+4+3 format)
+htmlContent += '<table>';
+
+const playersForTeam = optimalTeamData[teamName];
+
+// Display players 1 to 4 in the first row
+htmlContent += '<tr>';
+for (let i = 0; i < 4; i++) {
+    const playerName = playersForTeam[i];
+    const imagePath = `./optimal_team_images/${playerName.replace(' ', '_')}.png`;
+
+    htmlContent += `
+    <td>
+    <div style = "text-align:center">
+    <img src="${imagePath}" alt="${playerName}" class="team-player-image resized-image" />
+    <p><b>${playerName}</b></p>
+    </div>
+    </td>`;
+}
+htmlContent += '</tr>';
+
+// Display players 5 to 8 in the second row
+htmlContent += '<tr>';
+for (let i = 4; i < 8; i++) {
+    const playerName = playersForTeam[i];
+    const imagePath = `./optimal_team_images/${playerName.replace(' ', '_')}.png`;
+
+    htmlContent += `
+        <td>
+        <div style = "text-align:center">
+            <img src="${imagePath}" alt="${playerName}" class="team-player-image resized-image" />
+            <p><b>${playerName}</b></p>
+            </div>
+        </td>
+    `;
+}
+htmlContent += '</tr>';
+
+// Display players 9 to 11 in the third row
+htmlContent += '<tr>';
+for (let i = 8; i < 11; i++) {
+    const playerName = playersForTeam[i];
+    const imagePath = `./optimal_team_images/${playerName.replace(' ', '_')}.png`;
+
+    htmlContent += `
+        <td>
+            <div style = "text-align:center">
+                <img src="${imagePath}" alt="${playerName}" class="team-player-image resized-image" />
+                <p><b>${playerName}</b></p>
+            </div>
+        </td>
+    `;
+}
+htmlContent += '</tr>';
+htmlContent += '</table>';
+playerOptions.innerHTML = htmlContent;
 }
 
 // Function to handle player or team selection from the dropdown
@@ -26,13 +205,13 @@ function handleSelection(dropdownType) {
     const select = dropdownType === "player" ? document.getElementById("playerSelect") : document.getElementById("teamSelect");
     const selectedValue = select.value;
     if (selectedValue) {
-        // Clear existing player data and options
-        document.getElementById("playerData").innerHTML = "";
+        document.getElementById("playerData").innerHTML = "";  // Clear existing player data and options
         const graphContainer = document.getElementById("statsContainer");
         graphContainer.innerHTML = "";
 
         if (dropdownType === "player") {
             populatePlayerOptions(selectedValue);
+            showIntroduction(selectedValue)
         } else {
             populateTeamOptions(selectedValue);
         }
@@ -80,7 +259,7 @@ function showBattingStatsOptions(playerName) {
     graphContainer.innerHTML = "";
     const playerData = document.getElementById("playerData");
     playerData.innerHTML = `<h4>Batting Stats</h4>
-    <select onchange="showBattingGraph('${playerName}')" id="battingStatsOptions" class="form-control">
+    <select onchange="showBattingGraph('${playerName}')" id="battingStatsOptions" class="form-control dropdown">
         <option selected value="Batting Average">Batting Average</option>
         <option value="Batting Strike Rate">Batting Strike Rate</option>
         <option value="Runs Scored">Runs Scored</option>
@@ -90,7 +269,6 @@ function showBattingStatsOptions(playerName) {
         <option value="Batting Strike Rate at Batting Position">Batting Strike Rate at Batting Position</option>
     </select>`
     showBattingGraph(playerName)
-        // <button class="btn btn-primary" onclick="showBattingGraph('${playerName}')">Show Graph</button>`;
 }
 
 // Function to display bowling stats options
@@ -100,14 +278,13 @@ function showBowlingStatsOptions(playerName) {
     const playerData = document.getElementById("playerData");
     
     playerData.innerHTML = `<h4>Bowling Stats</h4>
-        <select onchange="showBowlingGraph('${playerName}')" id="bowlingStatsOptions" class="form-control">
-            <option value="Average Economy">Average Economy</option>
+        <select onchange="showBowlingGraph('${playerName}')" id="bowlingStatsOptions" class="form-control dropdown">
+            <option selected value="Average Economy">Average Economy</option>
             <option value="Wickets Taken">Wickets Taken</option>
             <option value="Maiden Overs">Maiden Overs</option>
             <option value="Bowling Strike Rate">Bowling Strike Rate</option>
             <option value="Overs Bowled">Overs Bowled</option>
         </select>`
-        // <button class="btn btn-primary" onclick="showBowlingGraph('${playerName}')">Show Graph</button>`;
     showBowlingGraph(playerName)
 }
 
@@ -117,11 +294,11 @@ function showVsOtherTeamsStatsOptions(playerName) {
     graphContainer.innerHTML = "";
     const playerData = document.getElementById("playerData");
     playerData.innerHTML = `<h4>Stats</h4>
-    <select onchange="showVsOtherTeamsGraphs('${playerName}')" id="VsOtherTeamsOptions" class="form-control">
-        <option selected value="Batting Average">Batting Average</option>
+    <select onchange="showVsOtherTeamsGraph('${playerName}')" id="VsOtherTeamsOptions" class="form-control dropdown">
+        <option value="Total Runs">Total Runs</option>
+        <option value="Batting Strike Rate">Batting Strike Rate</option>
     </select>`
-    showVsOtherTeamsGraphs(playerName)
-        // <button class="btn btn-primary" onclick="showBattingGraph('${playerName}')">Show Graph</button>`;
+    showVsOtherTeamsGraph(playerName)
 }
 
 // Function to display batting graphs
@@ -192,6 +369,27 @@ function showBowlingGraph(playerName) {
     <img src="${imagePath}" alt="${selectedOption} Graph" width="800" height="600">`;
 }
 
+// Function to display stats vs other teams 
+function showVsOtherTeamsGraph(playerName) {
+    const selectedOption = document.getElementById("VsOtherTeamsOptions").value;
+    const graphContainer = document.getElementById("statsContainer");
+    const imageName = playerName.replace(' ', '_').toLowerCase(); // Convert player name to lowercase and replace spaces with underscores
+
+    let imagePath;
+
+    switch (selectedOption) {
+        case "Total Runs":
+            imagePath = `../graph_generation/Vs_Other_Teams/Runs_Scored_Against_Individual_Teams/${imageName}_runs_scored_against_individual_teams.png`;
+            break;
+        case "Batting Strike Rate":
+            imagePath = `../graph_generation/Vs_Other_Teams/Batting_Strike_Rate_Against_Individual_Teams/${imageName}_batting_strike_rate_against_individual_teams.png`;
+            break;
+    }
+
+    // Display the selected graph image
+    graphContainer.innerHTML = `<h5>${playerName} - ${selectedOption}</h5>
+    <img src="${imagePath}" alt="${selectedOption} Graph" width="800" height="600">`;
+}
 
 // Initialize the "Players" dropdown with player names
 const playerSelect = document.getElementById("playerSelect");
@@ -241,7 +439,8 @@ teams.forEach((team) => {
     teamSelect.appendChild(option);
 });
 
-// Add event listeners for player and team selection
+// Event listeners for player and team selection
+
 playerSelect.addEventListener("change", () => {
     handleSelection("player");
     // Clear the team dropdown when a player is selected
